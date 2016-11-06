@@ -40,6 +40,6 @@ $("document").ready(function() {
   	}
   	$('html, body').animate({
         scrollTop: $("#about-container").offset().top
-    }, 1000);
+    }, 500);
   });
 });
