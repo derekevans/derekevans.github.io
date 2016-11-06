@@ -39,7 +39,7 @@ $("document").ready(function() {
   		$("#hamburger-menu-container").trigger("click");
   	}
   	$('html, body').animate({
-        scrollTop: $("#about-container").offset().top
+        scrollTop: $("#about-txt").offset().top
     }, 500);
   });
 });
