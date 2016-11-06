@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link href='https://fonts.googleapis.com/css?family=Montserrat:700|Raleway' rel='stylesheet' type='text/css'>
+		<script src="https://use.fontawesome.com/6c461ebd2c.js"></script>
+		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0;">
+		<link rel="stylesheet" href="../site.css">
+	</head>
+  <body>
+    <script type="text/javascript">
+    	$(document).ready( function() {
+    		d3.select("body")
+			.append("svg")
+			.attr("width", 50)
+			.attr("height", 50)
+			.append("circle")
+			.attr("cx", 25)
+			.attr("cy", 25)
+			.attr("r", 25)
+			.style("fill", "purple");
+			
+    		// load data
+			d3.csv("templog5.csv", function(error, data) {
+
+  				data.forEach(function(d) {
+    				console.log(d);
+  				});
+  			});
+    	});
+    </script>
+  </body>
+</html>
