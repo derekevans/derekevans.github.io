@@ -6,30 +6,93 @@
 		<script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0;">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="../site.css">
+		<style>
+		.line {
+  			fill: none;
+  			/*stroke: #15a346;*/
+  			stroke: black;
+  			stroke-width: 2px;
+		}
+		</style>
 	</head>
   <body>
+  	<p><a href="http://stackoverflow.com/questions/21006647/cannot-import-data-from-csv-file-in-d3">
+  	Reference this when trying to access csv for d3.js on local host.</a>
+  	</p>
+    <p>Basically, open up terminal and cd to folder where index.html is.  
+    Then run python server with command "python-m SimpleHttpServer 8888 &".
+    Url to html page is "http://localhost:8888/data/datatest.html", for example.
     <script type="text/javascript">
     	$(document).ready( function() {
-    		d3.select("body")
-			.append("svg")
-			.attr("width", 50)
-			.attr("height", 50)
-			.append("circle")
-			.attr("cx", 25)
-			.attr("cy", 25)
-			.attr("r", 25)
-			.style("fill", "purple");
-			
+    		var width = $(window).width();
+    		var height = $(window).height();
+    		margin = {top: 20, right: 20, bottom: 100, left: 50}
+    		
+    		//create the svg container 700px x 700px
+    		var svg = d3.select("body")
+    					.append("svg")
+                        .attr("width", width+margin.left+margin.right)
+                        .attr("height", height+margin.top+margin.bottom)
+            			.append("g")
+    					.attr("transform",
+          				"translate(" + margin.left + "," + margin.top + ")");
+
+            // set the ranges
+			var x = d3.scaleTime().range([0, width-margin.left-margin.right]);
+			var y = d3.scaleLinear().range([height-margin.top-margin.bottom, 0]);
+
+			// define the line
+			var valueline = d3.line()
+    							.x(function(d) { return x(d.Time); })
+    							.y(function(d) { return y(d.F); });
+    							
     		// load data
 			d3.csv("templog5.csv", function(error, data) {
-
+				if (error) throw error;
+				//format Time to %m/%e/%y  %H:%M
+				//see https://github.com/d3/d3-time-format/blob/master/README.md#timeFormat
+				var parseTime = d3.timeParse("%m/%e/%y %H:%M"); 
+				
+				//Convert string to number and time
   				data.forEach(function(d) {
-    				console.log(d);
+  					d.Time = parseTime(d.Time);
+    				d.F = +d.F;
+    				d.mV = +d.mV;
+    				d.Observations = +d.Observations;
+    				//console.log(d);
   				});
+  				
+  				// Scale the range of the data
+  				x.domain(d3.extent(data, function(d) { return d.Time; }));
+  				y.domain([d3.min(data, function(d) {return d.F})-1, d3.max(data, function(d) { return d.F; })+1]);
+
+  				// Add the X Axis
+  				svg.append("g")
+      				.attr("class", "axis")
+      				.attr("transform", "translate(0,"+width+")")
+      				.call(d3.axisBottom(x)
+              		.tickFormat(d3.timeFormat("%m/%e/%y %H:%M")))
+      				.selectAll("text")	
+        			.style("text-anchor", "end")
+        			.attr("dx", "-.8em")
+        			.attr("dy", ".15em")
+        			.attr("transform", "rotate(-65)");
+
+  				// Add the Y Axis
+  				svg.append("g")
+      				.attr("class", "axis")
+      				.call(d3.axisLeft(y));
+      			
+      			// Add the valueline path.
+  				svg.append("path")
+      				.data([data])
+      				.attr("class", "line")
+      				.attr("d", valueline);
+
+				});
   			});
-    	});
     </script>
   </body>
 </html>
