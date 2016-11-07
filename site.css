@@ -353,7 +353,7 @@ a, a:active {
 	text-align: center;
 }
 
-@media only screen and (max-device-width: 736px) {
+@media only screen and (max-device-width: 800px) {
 	#navbar, #navbar-name, #hamburger-menu-container {
 		height: 75px;
 	}
