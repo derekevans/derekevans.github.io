@@ -11,8 +11,8 @@
 		<style>
 		.line {
   			fill: none;
-  			/*stroke: #15a346;*/
-  			stroke: black;
+  			stroke: #15a346;
+  			/*stroke: black;*/
   			stroke-width: 2px;
 		}
 		</style>
@@ -22,13 +22,15 @@
   	Reference this when trying to access csv for d3.js on local host.</a>
   	</p>
     <p>Basically, open up terminal and cd to folder where index.html is.  
-    Then run python server with command "python-m SimpleHttpServer 8888 &".
-    Url to html page is "http://localhost:8888/data/datatest.html", for example.
+    Then run python server with command "python -m SimpleHttpServer 8888 &".
+    Url to html page is "http://localhost:8888/data/datatest.html", for example.</p>
+    <p><a href="http://stackoverflow.com/questions/21006647/cannot-import-data-from-csv-file-in-d3">
+  	I used this example to create the graph</a></p>
     <script type="text/javascript">
     	$(document).ready( function() {
-    		var width = $(window).width();
-    		var height = $(window).height();
-    		margin = {top: 20, right: 20, bottom: 100, left: 50}
+    	    margin = {top: 20, right: 40, bottom: 110, left: 80}
+    		var width = ($(window).width()*1)-margin.left-margin.right;
+    		var height = ($(window).height()*0.5)-margin.top-margin.bottom;
     		
     		//create the svg container 700px x 700px
     		var svg = d3.select("body")
@@ -40,8 +42,8 @@
           				"translate(" + margin.left + "," + margin.top + ")");
 
             // set the ranges
-			var x = d3.scaleTime().range([0, width-margin.left-margin.right]);
-			var y = d3.scaleLinear().range([height-margin.top-margin.bottom, 0]);
+			var x = d3.scaleTime().range([0, width]);
+			var y = d3.scaleLinear().range([height, 0]);
 
 			// define the line
 			var valueline = d3.line()
@@ -71,27 +73,34 @@
   				// Add the X Axis
   				svg.append("g")
       				.attr("class", "axis")
-      				.attr("transform", "translate(0,"+width+")")
+      				.attr("transform", "translate(0,"+height+")")
       				.call(d3.axisBottom(x)
-              		.tickFormat(d3.timeFormat("%m/%e/%y %H:%M")))
+              		.tickFormat(d3.timeFormat("%m/%e/%y %I:%M %p")))
       				.selectAll("text")	
         			.style("text-anchor", "end")
         			.attr("dx", "-.8em")
         			.attr("dy", ".15em")
-        			.attr("transform", "rotate(-65)");
+        			.attr("transform", "rotate(-65)")
+        			.attr("font-size","12");
 
   				// Add the Y Axis
   				svg.append("g")
       				.attr("class", "axis")
-      				.call(d3.axisLeft(y));
+      				.call(d3.axisLeft(y))
+      				.attr("font-size","12");
       			
       			// Add the valueline path.
   				svg.append("path")
       				.data([data])
       				.attr("class", "line")
-      				.attr("d", valueline);
-
-				});
+      				.attr("d", valueline)
+      			
+      			//Add the y axis label	
+      			svg.append("text")
+      				.attr("text-anchor", "middle") 
+            		.attr("transform", "translate("+ (margin.left/2)*-1 +","+(height/2)+")rotate(-90)") 
+            		.text("Temperature (F)");
+				});				
   			});
     </script>
   </body>
