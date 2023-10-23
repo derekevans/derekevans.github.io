@@ -1,0 +1,79 @@
+
+.about {
+	width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    flex-direction: row;
+    height: 300px;
+    box-sizing: border-box;
+
+    .about-txt {
+        width: 40%;
+		color: black;
+        box-sizing: border-box;
+        margin-left: 5rem;
+    }
+
+	.about-img {
+		background-image: url("../../../public/derek-evans.jpg");
+	    background-repeat: no-repeat;
+		background-size: contain;
+		background-position: center;
+        width: 275px;
+        height: 275px;
+        border-radius: 50%;
+	}
+
+	.about-icons {
+		text-align: right;
+		padding-bottom: 20px;
+
+		a {
+			color: black;
+			font-size: 30px;
+			margin-left: 20px;
+		}
+	}
+
+	&.dark {
+
+		background-color: black;
+
+		.about-txt {
+			color: white;
+		}
+
+		.about-icons {
+			a {
+				color: white;
+			}
+		}
+	}
+}
+
+@media only screen and (max-device-width: 800px) {
+	
+	.about {
+        flex-direction: column;
+        height: auto;
+        padding: 1rem;
+
+		.about-img {
+			width: 175px;
+            height: 175px;
+		}
+		
+		.about-txt {
+			width: 100%;
+			height: auto;
+            margin-left: 0;
+		}
+
+        .about-icons {
+            padding-bottom: 0;
+            box-sizing: border-box;
+        }
+	}
+}
