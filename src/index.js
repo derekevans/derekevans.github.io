@@ -2,13 +2,13 @@
 import * as React from "react"
 import * as ReactDOM from "react-dom/client"
 import {
-  createBrowserRouter,
+  createHashRouter,
   RouterProvider,
 } from "react-router-dom"
 import "./index.css"
 import { ROUTES } from './routes/Routes'
 
-const router = createBrowserRouter(ROUTES)
+const router = createHashRouter(ROUTES)
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

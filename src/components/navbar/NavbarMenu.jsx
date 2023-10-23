@@ -21,7 +21,7 @@ export default class NavbarMenu extends React.Component {
         return [
             {
                 name: 'Pubs & Presentations',
-                href: '/pubs'
+                href: '/#/pubs'
             }
         ]
     }
