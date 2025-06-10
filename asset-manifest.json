@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/static/css/main.b9f6f3ce.css",
-    "main.js": "/static/js/main.b6f9879d.js",
+    "main.js": "/static/js/main.3913648b.js",
     "static/media/derek-evans.jpg": "/static/media/derek-evans.04ee4d8b8feeaede6ad1.jpg",
     "index.html": "/index.html",
     "main.b9f6f3ce.css.map": "/static/css/main.b9f6f3ce.css.map",
-    "main.b6f9879d.js.map": "/static/js/main.b6f9879d.js.map"
+    "main.3913648b.js.map": "/static/js/main.3913648b.js.map"
   },
   "entrypoints": [
     "static/css/main.b9f6f3ce.css",
-    "static/js/main.b6f9879d.js"
+    "static/js/main.3913648b.js"
   ]
 }
